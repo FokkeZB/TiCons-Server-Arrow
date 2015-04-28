@@ -1,0 +1,5 @@
+node_modules
+logs
+.apibuilder
+tmp
+web/public/download

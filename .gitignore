@@ -1,0 +1,4 @@
+conf/secret.js
+logs
+node_modules
+tmp

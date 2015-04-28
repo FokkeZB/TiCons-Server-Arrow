@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>TiCons - Generate all icon & splash screens for your Titanium app from just 2 or 3 files!</title>
+		<meta name="description" content="Generate all icon & splash screens for your Titanium app from just 2 or 3 files!">
+		<meta name="author" content="Fokke Zandbergen">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<style type="text/css">
+
+		  body {
+			padding-top: 20px;
+			padding-bottom: 40px;
+		  }
+
+		  .container-narrow {
+			margin: 0 auto;
+			max-width: 700px;
+		  }
+		  .container-narrow > hr {
+			margin: 30px 0;
+		  }
+
+		  .jumbotron {
+			margin: 60px 0;
+			padding: 1em;
+		  }
+
+		  .jumbotron p {
+		  	font-size: 14px;
+		  	font-weight: normal;
+		  }
+
+		  .jumbotron p.lead {
+		  	font-size: 21px;
+		  	font-weight: 200;
+		  }
+
+		  pre {
+			background-color: black;
+			color: white;
+		  }
+
+		  .tab-pane {
+		  	background-color: white;
+		  	padding: 1em;
+		  	border-width: 0 1px 1px 1px;
+		  	border-style: solid;
+		  	border-color: #ddd;
+		  }
+
+		  .row + .help-block {
+		  	margin-top: 0px;
+		  }
+
+		  .download {
+		  	margin-bottom: 20px;
+		  }
+
+		  .about {
+			margin: 60px 0;
+		  }
+
+		  .about p + h4 {
+			margin-top: 28px;
+		  }
+
+		</style>
+	</head>
+	<body>
+
+		<div class="container-narrow">
+
+		<div class="masthead">
+			<ul class="nav nav-pills pull-right">
+				<li><a href="#about">About</a></li>
+				<li><a href="https://www.npmjs.org/package/ticons" target="_blank">NPM</a></li>
+				<li><a href="https://github.com/FokkeZB/TiCons-CLI" target="_blank">GitHub CLI</a></li>
+				<li><a href="https://github.com/FokkeZB/TiCons-Server" target="_blank">GitHub Server</a></li>
+			</ul>
+			<h1><span class="muted">T</span>iCons</h1>
+		</div>
+
+		<hr>
+
+		<div class="jumbotron">
+			<h2 class="text-center">Generate Icons &amp; Splash (Launch) Images</h2>
+			<p class="text-center lead">For Appcelerator&reg; Titanium&trade; &amp; Alloy</p>
+
+			<h3>Icons</h3>
+			<p>Although you could generate all icons from a single 2048x2048 PNG (set <em>Border radius</em> to <code>10</code>), it is more likely you want to run it once for iOS using a flat image and then again for the other platforms using a transparent input for <a href="http://developer.android.com/design/style/iconography.html" target="_blank">unique shapes</a>.</p>
+
+			<h3>Splashes</h3>
+			<p>You could use the same square 2208x2208 PNG for both icons and splashes. You might want to disable the <em>Crop</em> option to simulate nine-patch for the other platforms.</p>
+
+			<h3>Compression</h3>
+			<p>Thanks to device fragmentation icons &amp; splashes make a big part of your app's size. Use <a href="https://imageoptim.com/" target="_blank">ImageOptim</a> to reduce the size up to 50%!</p>
+
+		</div>
+
+		{{#if errors}}
+			{{#each errors}}
+				<div class="alert alert-danger" role="alert">{{this}}</div>
+			{{/each}}
+		{{/if}}
+	  
+		<div class="well">
+
+			<h2>TiCons Server</h2>
+
+			<p>The TiCons server simply wraps the <a href="#npm">NPM module</a>.</p>
+
+			<p><span class="label label-info">TIP</span> Submit the form (with optional input) for CLI and Module copy-paste examples.</p>
+
+			<form action="./" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="MAX_FILE_SIZE" value="12328960" />
+
+				<div role="tabpanel">
+
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#global" aria-controls="global" role="tab" data-toggle="tab">Global</a></li>
+						<li role="presentation"><a href="#icons" aria-controls="icons" role="tab" data-toggle="tab">Icons</a></li>
+						<li role="presentation"><a href="#splashes" aria-controls="splashes" role="tab" data-toggle="tab">Splashes</a></li>
+						<button type="submit" class="btn btn-primary pull-right">Generate</button>	
+					</ul>
+
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="global">
+
+							<div class="form-group">
+								<label for="input">Input</label>
+								<input type="file" name="input" id="input">
+								<p class="help-block">Ideally an 2208x2208 image with main content in center 1104x1104 if you're cropping splashes, which is the default. Leave out the input if you just want the <a href="#npm">CLI and Module examples</a>.</p>
+							</div>
+
+							<div class="form-group">
+								<label>Type</label>
+								<div>
+								<label class="radio-inline" for="type-icons">
+									<input type="radio" name="type" id="type-icons" {{#ifCond params.type "===" "icons"}} checked="checked"{{/ifCond}} value="icons"> Icons
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="type" id="type-splashes" {{#ifCond params.type "===" "splashes"}} checked="checked"{{/ifCond}} value="splashes"> Splashes
+								</label>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Minimum DPI</label>
+								<div>
+								{{#each dpi}}
+									<label class="radio-inline" for="min-dpi-{{this}}">
+										<input type="radio" name="min-dpi" id="min-dpi-{{this}}" {{#ifCond ../params.min-dpi "==" this}} checked="checked"{{/ifCond}} value="{{this}}"> {{@key}} ({{this}})
+									</label>
+								{{/each}}
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Maximum DPI</label>
+								<div>
+								{{#each dpi}}
+									<label class="radio-inline" for="max-dpi-{{this}}">
+										<input type="radio" name="max-dpi" id="max-dpi-{{this}}" {{#ifCond ../params.max-dpi "==" this}} checked="checked"{{/ifCond}} value="{{this}}"> {{@key}} ({{this}})
+									</label>
+								{{/each}}
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Platforms</label>
+								<div>
+								{{#each platforms}}
+									<label class="checkbox-inline" for="platforms-{{@key}}">
+										<input type="checkbox" name="platforms-{{@key}}" id="platforms-{{@key}}" {{#ifCond @key "in" ../params.platforms}} checked="checked"{{/ifCond}} value="{{@key}}"> {{this}}
+									</label>
+								{{/each}}
+								</div>
+								<p class="help-block">Apple Watches images generate to <code>/apple-watch</code>. You need to import them in the XCode project yourself until Titanium supports JavaScript Extensions.</p>
+							</div>
+
+							<div class="form-group">
+								<label>Options</label>
+								<div class="checkbox">
+									<label for="alloy">
+										<input type="checkbox" name="alloy" {{#ifCond params.alloy "===" true}} checked="checked"{{/ifCond}} id="alloy" value="true"> <strong>Alloy:</strong> Write to <code>/app/assets</code> instead of <code>/Resources</code>.
+									</label>
+								</div>
+								<div class="checkbox">
+									<label for="label">
+										<input type="checkbox" name="label" {{#ifCond params.label "===" true}} checked="checked"{{/ifCond}} id="label" value="true"> <strong>Label:</strong> Draw the name of the spec on the image for debugging.
+									</label>
+								</div>
+							</div>
+
+						</div>
+						<div role="tabpanel" class="tab-pane" id="icons">
+
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label for="radius">Border radius</label>
+										<input type="number" name="radius" class="form-control" id="radius" min="0" max="50" maxlength="2" value="{{params.radius}}">
+									</div>
+								</div>
+							</div>
+
+							<p class="help-block">iOS adds a border radius for you and TiCons will not apply this options. If you use the same flat square input for all platforms you might want to set a border radius for them to use.</p>
+
+						</div>
+						<div role="tabpanel" class="tab-pane" id="splashes">
+
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label for="locale">Locale</label>
+										<input type="text" name="locale" class="form-control" id="locale" maxlength="2" value="{{params.locale}}">
+									</div>
+								</div>
+							</div>
+
+							<p class="help-block">Specify a <a href="http://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO 639-1</a> language code to write iOS and Android splash screens to <a href="http://docs.appcelerator.com/titanium/latest/#!/guide/Icons_and_Splash_Screens-section-29004897_IconsandSplashScreens-LocalizedSplashScreens" target="_blank">localized paths</a>. You would need to run TiCons for every required language and then merge the resulting asset folders.</p>
+
+							<div class="form-group">
+								<label>Orientations</label>
+								<div>
+								{{#each orientations}}
+									<label class="checkbox-inline" for="orientations-{{@key}}">
+										<input type="checkbox" name="orientations-{{@key}}" id="orientations-{{@key}}" {{#ifCond @key "in" ../params.orientations}} checked="checked"{{/ifCond}} value="{{@key}}"> {{this}}
+									</label>
+								{{/each}}
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label for="width">Protected width</label>
+										<input type="number" name="width" class="form-control" id="width" maxlength="4" value="{{params.width}}">
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label for="height">Protected height</label>
+										<input type="number" name="height" class="form-control" id="height" maxlength="4" value="{{params.height}}">
+									</div>
+								</div>
+							</div>
+
+							<p class="help-block">TiCons try to not crop this part of the input, measured from the center. It depends on the aspect ratio of the input and that of the output specs if it can.</p>
+
+							<div class="form-group">
+								<label>Options</label>
+								<div class="checkbox">
+									<label for="no-nine">
+										<input type="checkbox" name="no-nine" {{#ifCond params.no-nine "===" false}} checked="checked"{{/ifCond}} id="no-nine" value="true"> <strong>Nine:</strong> Use <a href="http://docs.appcelerator.com/platform/latest/#!/guide/Icons_and_Splash_Screens-section-29004897_IconsandSplashScreens-Androidsplashscreenconsiderations" target="_blank">nine-patch</a> for Android.
+									</label>
+								</div>
+								<div class="checkbox">
+									<label for="no-crop">
+										<input type="checkbox" name="no-crop" {{#ifCond params.no-crop "===" false}} checked="checked"{{/ifCond}} id="no-crop" value="true"> <strong>Crop:</strong> Crop images or disable to contain and fill except where nine-patch is used.
+									</label>
+								</div>
+								<div class="checkbox">
+									<label for="no-fix">
+										<input type="checkbox" name="no-fix" {{#ifCond params.no-fix "===" false}} checked="checked"{{/ifCond}} id="no-fix" value="true"> <strong>Fix:</strong> Fix some bugs in <a href="http://docs.appcelerator.com/platform/latest/#!/guide/Icons_and_Splash_Screens">Appcelerator's</a> specs.
+									</label>
+								</div>
+							</div>
+
+						</div><!-- /tab-pane -->
+
+					</div><!-- /tab-content -->
+
+				</div><!-- /tabpanel -->
+
+			</form>
+		</div>
+
+		{{#if zipUrl}}
+			<a href="{{zipUrl}}" class="btn btn-success btn-lg btn-block download">Download the ZIP</a>
+		{{/if}}
+
+		<div class="well">
+
+			<h2>TiCons CLI <a href="https://www.npmjs.com/package/ticons" target="_blank" name="npm"><img src="http://img.shields.io/npm/v/ticons.png"></a></h2>
+			<p>Next time, use TiCons as CLI or NPM module, e.g. as part of CI or an app factory.</p>
+
+			<pre>brew install imagemagick && sudo npm i -g ticons</pre>
+
+			<p>Submit the TiCons Server form (with optional input) for CLI and Module copy-paste examples.</p>
+
+			{{#if exampleCommand}}
+				<h3>CLI</h3>
+				<pre>{{exampleCommand}}</pre>
+			{{/if}}
+
+			{{#if exampleCall}}
+				<h3>Module</h3>
+				<pre>{{exampleCall}}</pre>
+			{{/if}}
+
+		</div>
+
+		<hr />
+
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- TiCons -->
+		<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-2966238263022924" data-ad-slot="1890839799"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+
+		<hr />
+
+		<a name="about"></a>
+
+		<div class="row-fluid about clearfix">
+			<div class="col-sm-6">
+
+				<h4>Apple Watch</h4>
+				<p>TiCons supports Apple Watch. These icons will generate to <code>/apple-watch</code>, but you'll have to add them to the XCode project manually as Titanium does support JavaScript Extentions yet.</p>
+
+				<h4>iPhone 6(+)</h4>
+				<p>TiCons has support for iPhone 6(+) <a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html#//apple_ref/doc/uid/TP40006556-CH27-SW1" target="_blank">icons</a> and <a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/MobileHIG/LaunchImages.html#//apple_ref/doc/uid/TP40006556-CH22-SW1" target="_blank">splashes</a>.</p>
+
+				<h4>App stores</h4>
+				<p>TiCons also generates iTunes Connect and Google Play assets for you.</p>
+
+			  	<h4>BlackBerry & Tizen</h4>
+			  	<p>TiCons will generate a Tizen icon and both icon and splash for BlackBerry 10.</p>
+
+			</div>
+			<div class="col-sm-6">
+
+				<h4>Filters</h4>
+				<p>TiCons does not apply any filters. iOS automatically adds rounded corners, so the border radius option does not apply to iOS.</p>
+
+				<h4>Android nine-patch splash</h4>
+				<p>TiCons by default generates nine-patch images for Android, but you can disable this. You can disable <em>Crop</em> to have a effect similar to nine-patch by resizing the input to be contained in the target size and then fill the remainder by repeating the outer pixels.</p>
+
+				<h4>Mobile Web</h4>
+				<p>There is partial support for <a href="http://docs.appcelerator.com/titanium/latest/#!/guide/Icons_and_Splash_Screens-section-29004897_IconsandSplashScreens-MobileWebgraphicassetrequirementsandoptions" target="_blank">Mobile Web</a>. HTML splash screens are currently not generated.</p>
+
+				<h4>Contribute</h4>
+				<p>Feel free to contact me at <a href="mailto:mail@fokkezb.nl">mail@fokkezb.nl</a> or fork the <a href="https://github.com/FokkeZB/TiCons-CLI" target="_blank">CLI</a> or <a href="https://github.com/FokkeZB/TiCons-Server" target="_blank">server</a> code and send a pull request.<p>
+
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="footer">
+			<p>&copy; <a href="http://www.fokkezb.nl" target="_blank">Fokke Zandbergen</a> - <a href="https://github.com/FokkeZB/TiCons-Server">License</a></p>
+		</div>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+	</body>
+</html>
