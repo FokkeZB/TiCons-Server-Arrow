@@ -8,7 +8,7 @@ Before you can run this local add a `secret.js` file to the `conf` directory whi
 
 ## Issues
 
-Please report issues and features requests in the repo's [issue tracker](https://github.com/fokkezb/ticons-cli/issues).
+Please report issues and features requests in the repo's [issue tracker](https://github.com/fokkezb/ticons-server/issues).
 
 ## License
 
