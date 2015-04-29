@@ -2,7 +2,6 @@ var Arrow = require('arrow'),
 	path = require('path'),
 	uuid = require('node-uuid'),
 	async = require('async'),
-	archiver = require('archiver'),
 	child_process = require('child_process'),
 	_ = require('lodash'),
 	fs = require('fs-extra'),
@@ -160,24 +159,6 @@ function zip(opts, callback) {
 	}, function (error, stdout, stderr) {
 		callback(error);
 	});
-
-	return;
-
-	var output = fs.createOutputStream(opts.output);
-	var archive = archiver('zip');
-
-	output.on('close', callback);
-	archive.on('error', callback);
-
-	archive.pipe(output);
-
-	archive.bulk([{
-		expand: true,
-		cwd: opts.input,
-		src: ['**/*']
-	}]);
-
-	archive.finalize();
 }
 
 function select(req, resp, output) {
