@@ -3,6 +3,7 @@ var Arrow = require('arrow'),
 	uuid = require('node-uuid'),
 	async = require('async'),
 	archiver = require('archiver'),
+	child_process = require('child_process'),
 	_ = require('lodash'),
 	fs = require('fs-extra'),
 	ticons = require('ticons'),
@@ -152,6 +153,16 @@ function respond(req, resp, opts) {
 }
 
 function zip(opts, callback) {
+
+	child_process.exec('zip -r ' + opts.output + ' ./', {
+		cwd: opts.input,
+
+	}, function (error, stdout, stderr) {
+		callback(error);
+	});
+
+	return;
+
 	var output = fs.createOutputStream(opts.output);
 	var archive = archiver('zip');
 
