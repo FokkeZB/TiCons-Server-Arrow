@@ -10,9 +10,10 @@ var Route = Arrow.Router.extend({
 
 		resp.render('index', {
 			dpi: tiConstants.dpi,
-			platforms: CFG.platforms,
 			orientations: CFG.orientations,
-			params: CFG.defaults
+			outputs: CFG.outputs,
+			params: CFG.defaults,
+			platforms: CFG.platforms
 		});
 	}
 });

@@ -78,7 +78,7 @@
 				<li><a href="https://github.com/FokkeZB/TiCons-CLI" target="_blank">GitHub CLI</a></li>
 				<li><a href="https://github.com/FokkeZB/TiCons-Server" target="_blank">GitHub Server</a></li>
 			</ul>
-			<h1><span class="muted">T</span>iCons</h1>
+			<h1><span class="text-muted">Ti</span>Cons</h1>
 		</div>
 
 		<hr>
@@ -97,22 +97,18 @@
 			<p>Thanks to device fragmentation icons &amp; splashes make a big part of your app's size. Use <a href="https://imageoptim.com/" target="_blank">ImageOptim</a> to reduce the size up to 50%!</p>
 
 		</div>
-
-		{{#if errors}}
-			{{#each errors}}
-				<div class="alert alert-danger" role="alert">{{this}}</div>
-			{{/each}}
-		{{/if}}
 	  
 		<div class="well">
 
-			<h2>TiCons Server</h2>
+			<h2>TiCons Server <a href="http://www.appcelerator.com/product/arrow/" target="_blank" title="Powered by Arrow Cloud" class="pull-right"><img src="/images/arrow-cloud.png" alt="Powered by Arrow Cloud" /></a></h2>
 
-			<p>The TiCons server simply wraps the <a href="#npm">NPM module</a>.</p>
+			<p>This <a href="http://www.appcelerator.com/product/arrow/" target="_blank">Appcelerator Arrow Cloud</a> server simply wraps the <a href="#npm">TiCons NPM Module</a>.</p>
 
 			<p><span class="label label-info">TIP</span> Submit the form (with optional input) for CLI and Module copy-paste examples.</p>
 
-			<form action="./" method="post" enctype="multipart/form-data">
+			<br />
+
+			<form action="./#result" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="MAX_FILE_SIZE" value="12328960" />
 
 				<div role="tabpanel">
@@ -134,14 +130,13 @@
 							</div>
 
 							<div class="form-group">
-								<label>Type</label>
+								<label>Output</label>
 								<div>
-								<label class="radio-inline" for="type-icons">
-									<input type="radio" name="type" id="type-icons" {{#ifCond params.type "===" "icons"}} checked="checked"{{/ifCond}} value="icons"> Icons
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="type" id="type-splashes" {{#ifCond params.type "===" "splashes"}} checked="checked"{{/ifCond}} value="splashes"> Splashes
-								</label>
+								{{#each outputs}}
+									<label class="checkbox-inline" for="output-{{@key}}">
+										<input type="checkbox" name="outputs-{{@key}}" id="outputs-{{@key}}" {{#ifCond @key "in" ../params.outputs}} checked="checked"{{/ifCond}} value="{{@key}}"> {{this}}
+									</label>
+								{{/each}}
 								</div>
 							</div>
 
@@ -150,7 +145,7 @@
 								<div>
 								{{#each dpi}}
 									<label class="radio-inline" for="min-dpi-{{this}}">
-										<input type="radio" name="min-dpi" id="min-dpi-{{this}}" {{#ifCond ../params.min-dpi "==" this}} checked="checked"{{/ifCond}} value="{{this}}"> {{@key}} ({{this}})
+										<input type="radio" name="min-dpi" id="min-dpi-{{this}}" {{#ifCond ../params.min-dpi "===" this}} checked="checked"{{/ifCond}} value="{{this}}"> {{@key}} ({{this}})
 									</label>
 								{{/each}}
 								</div>
@@ -160,7 +155,7 @@
 								<div>
 								{{#each dpi}}
 									<label class="radio-inline" for="max-dpi-{{this}}">
-										<input type="radio" name="max-dpi" id="max-dpi-{{this}}" {{#ifCond ../params.max-dpi "==" this}} checked="checked"{{/ifCond}} value="{{this}}"> {{@key}} ({{this}})
+										<input type="radio" name="max-dpi" id="max-dpi-{{this}}" {{#ifCond ../params.max-dpi "===" this}} checked="checked"{{/ifCond}} value="{{this}}"> {{@key}} ({{this}})
 									</label>
 								{{/each}}
 								</div>
@@ -276,27 +271,45 @@
 			</form>
 		</div>
 
+		<a name="result"></a>
+
+		{{#if errors}}
+			{{#each errors}}
+				<div class="alert alert-danger" role="alert">{{this}}</div>
+			{{/each}}
+		{{/if}}
+
 		{{#if zipUrl}}
 			<a href="{{zipUrl}}" class="btn btn-success btn-lg btn-block download">Download the ZIP</a>
 		{{/if}}
 
+		<a name="npm"></a>
+
 		<div class="well">
 
-			<h2>TiCons CLI <a href="https://www.npmjs.com/package/ticons" target="_blank" name="npm"><img src="http://img.shields.io/npm/v/ticons.png"></a></h2>
+			<h2>TiCons CLI &amp; Module <a href="https://www.npmjs.com/package/ticons" target="_blank" class="pull-right"><img src="http://img.shields.io/npm/v/ticons.png"></a></h2>
 			<p>Next time, use TiCons as CLI or NPM module, e.g. as part of CI or an app factory.</p>
 
 			<pre>brew install imagemagick && sudo npm i -g ticons</pre>
 
-			<p>Submit the TiCons Server form (with optional input) for CLI and Module copy-paste examples.</p>
+			<p><span class="label label-info">TIP</span> Submit the TiCons Server form (with optional input) for CLI and Module copy-paste examples.</p>
 
-			{{#if exampleCommand}}
+			{{#if examples}}
+			
 				<h3>CLI</h3>
-				<pre>{{exampleCommand}}</pre>
-			{{/if}}
 
-			{{#if exampleCall}}
+				<pre>{{#if examples.icons}}{{examples.icons.cli}}{{#if examples.splashes}}
+
+{{/if}}{{/if}}{{#if examples.splashes}}{{examples.splashes.cli}}
+{{/if}}</pre>
+
 				<h3>Module</h3>
-				<pre>{{exampleCall}}</pre>
+
+				<pre>{{#if examples.icons}}{{examples.icons.module}}{{#if examples.splashes}}
+
+{{/if}}{{/if}}{{#if examples.splashes}}{{examples.splashes.module}}
+{{/if}}</pre>
+
 			{{/if}}
 
 		</div>

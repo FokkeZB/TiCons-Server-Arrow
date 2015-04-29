@@ -19,8 +19,12 @@ module.exports = {
 			'portrait': 'Portrait',
 			'landscape': 'Landscape'
 		},
+		outputs: {
+			'icons': 'Icons',
+			'splashes': 'Splashes'
+		},
 		defaults: {
-			'type': 'icons',
+			'outputs': ['icons', 'splashes'],
 			'min-dpi': 160,
 			'max-dpi': 480,
 			'alloy': true,

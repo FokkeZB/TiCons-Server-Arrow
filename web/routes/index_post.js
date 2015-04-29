@@ -32,67 +32,67 @@ var Route = Arrow.Router.extend({
 		req.params.radius = parseInt(req.params.radius, 10);
 
 		// fix arrays
+		utils.fixArrays(req, 'outputs');
 		utils.fixArrays(req, 'platforms');
 		utils.fixArrays(req, 'orientations');
-
-		if (req.params.type !== 'icons' && req.params.type !== 'splashes') {
-			return respond(req, resp, 'Invalid type.');
-		}
 
 		if (req.params.locale !== '' && !/^[a-z]{2}/.test(req.params.locale)) {
 			return respond(req, resp, 'Invalid language.');
 		}
 
-		var ticonsCommand = req.params.type;
+		var doIcons = req.params.outputs.indexOf('icons') !== -1;
+		var doSplashes = req.params.outputs.indexOf('splashes') !== -1;
+
+		if (!doIcons && !doSplashes) {
+			return respond(req, resp, 'Select an output.');
+		}
+
+		var iconsOpts, splashesOpts;
+
+		resp.locals.examples = {};
+
+		if (doIcons) {
+			iconsOpts = select(req, resp, 'icons');
+		}
+
+		if (doSplashes) {
+			splashesOpts = select(req, resp, 'splashes');
+		}
+
+		if (req.files.input.filename === '' || req.files.input.mimetype !== 'image/png') {
+			return respond(req, resp, 'Input is missing or no PNG file.');
+		}
+
 		var name = uuid.v1();
 		var fileName = name + '.zip';
 		var tmpPath = path.join(CFG.tmpPath, name);
 		var zipUrl = path.join(CFG.zipUrl, fileName);
 		var zipPath = path.join(CFG.zipPath, fileName);
 
-		// TODO: Print CLI command
-
-		var ticonsCliOpts = {
-			'output-dir': 'path/to/your/project',
-			'alloy': req.params.alloy,
-			'platforms': req.params.platforms
-		};
-
-		var keys = ['min-dpi', 'max-dpi', 'label'];
-
-		if (ticonsCommand === 'icons') {
-			keys.push('radius');
-		}
-
-		if (ticonsCommand === 'splashes') {
-			keys.push('locale', 'orientation', 'width', 'height', 'no-nine', 'no-crop', 'no-fix');
-		}
-
-		keys.forEach(function (key) {
-			if (req.params[key] !== CFG.defaults[key]) {
-				ticonsCliOpts[key] = req.params[key];
-			}
-		});
-
-		resp.locals.exampleCommand = 'ticons ' + ticonsCommand + ' path/to/your/image.png ' + utils.toArgs(ticonsCliOpts);
-
-		var ticonsOpts = utils.toCamelCase(ticonsCliOpts);
-		ticonsOpts.input = 'path/to/your/image.png';
-
-		resp.locals.exampleCall = 'ticons.' + ticonsCommand + '(' + JSON.stringify(ticonsOpts, null, '  ') + ', function(err, files) {});';
-
-		if (req.files.input.filename === '' || req.files.input.mimetype !== 'image/png') {
-			return respond(req, resp, 'Input is missing or no PNG file.');
-		}
-
-		ticonsOpts.input = req.params.input;
-		ticonsOpts.outputDir = tmpPath;
-
 		async.series({
 
-			ticons: function (next) {
-				ticons[ticonsCommand](ticonsOpts, next);
+			icons: function (next) {
+
+				if (!doIcons) {
+					return next();
+				}
+
+				iconsOpts.outputDir = tmpPath;
+
+				ticons.icons(iconsOpts, next);
 			},
+
+			splashes: function (next) {
+
+				if (!doSplashes) {
+					return next();
+				}
+
+				splashesOpts.outputDir = tmpPath;
+
+				ticons.splashes(splashesOpts, next);
+			},
+
 			zip: function (next) {
 				zip({
 					input: tmpPath,
@@ -142,10 +142,11 @@ function respond(req, resp, opts) {
 		opts = {};
 	}
 
-	opts.params = _.defaults(req.params, CFG.defaults);
 	opts.dpi = tiConstants.dpi;
-	opts.platforms = CFG.platforms;
 	opts.orientations = CFG.orientations;
+	opts.outputs = CFG.outputs;
+	opts.params = _.defaults(req.params, CFG.defaults);
+	opts.platforms = CFG.platforms;
 
 	resp.render('index', opts);
 }
@@ -166,6 +167,39 @@ function zip(opts, callback) {
 	}]);
 
 	archive.finalize();
+}
+
+function select(req, resp, output) {
+	var CFG = req.server.config.app;
+
+	var args = {
+		'output-dir': 'path/to/your/project',
+		'alloy': req.params.alloy,
+		'platforms': req.params.platforms
+	};
+
+	var keys = ['min-dpi', 'max-dpi', 'label'];
+
+	if (output === 'icons') {
+		keys.push('radius');
+	} else {
+		keys.push('locale', 'orientation', 'width', 'height', 'no-nine', 'no-crop', 'no-fix');
+	}
+
+	keys.forEach(function (key) {
+		if (req.params[key] !== CFG.defaults[key] && req.params[key] !== '') {
+			args[key] = req.params[key];
+		}
+	});
+
+	resp.locals.examples[output] = {};
+	resp.locals.examples[output].cli = 'ticons ' + output + ' path/to/image.png ' + utils.toArgs(args);
+	var opts = utils.toCamelCase(args);
+	opts.input = 'path/to/your/image.png';
+	resp.locals.examples[output].module = 'ticons.' + output + '(' + JSON.stringify(opts, null, '  ') + ', function(err, files) {});';
+	opts.input = req.params.input;
+
+	return opts;
 }
 
 module.exports = Route;
