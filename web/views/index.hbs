@@ -102,14 +102,24 @@
 
 			<h2>TiCons Server <a href="http://www.appcelerator.com/product/arrow/" target="_blank" title="Powered by Arrow Cloud" class="pull-right"><img src="/images/arrow-cloud.png" alt="Powered by Arrow Cloud" /></a></h2>
 
-			<p>This <a href="http://www.appcelerator.com/product/arrow/" target="_blank">Appcelerator Arrow Cloud</a> server simply wraps the <a href="#npm">TiCons NPM Module</a>.</p>
-
-			<p><span class="label label-info">TIP</span> Submit the form (with optional input) for CLI and Module copy-paste examples.</p>
-
-			<br />
+			<p>This <a href="http://www.appcelerator.com/product/arrow/" target="_blank">Appcelerator Arrow Cloud</a> server simply wraps the <a href="#npm">TiCons NPM Module</a>.</p>			
 
 			<form action="./#result" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="MAX_FILE_SIZE" value="12328960" />
+
+				<h3>Input</h3>
+
+				<p><span class="label label-info">TIP</span> Submit the form (with optional input) for CLI and Module copy-paste examples.</p>
+
+				<br />
+
+				<div class="form-group">
+					<input type="file" name="input" id="input">
+					<p class="help-block">Ideally an 2208x2208 image with main content in center 1104x1104 if you're cropping splashes (default).</p>
+					
+				</div>
+
+				<h3>Options</h3>
 
 				<div role="tabpanel">
 
@@ -122,12 +132,6 @@
 
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="global">
-
-							<div class="form-group">
-								<label for="input">Input</label>
-								<input type="file" name="input" id="input">
-								<p class="help-block">Ideally an 2208x2208 image with main content in center 1104x1104 if you're cropping splashes, which is the default. Leave out the input if you just want the <a href="#npm">CLI and Module examples</a>.</p>
-							</div>
 
 							<div class="form-group">
 								<label>Output</label>

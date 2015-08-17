@@ -4,3 +4,4 @@ node_modules
 tmp
 web/public/download
 .settings
+npm-debug.log
