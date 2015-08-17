@@ -55,9 +55,7 @@ module.exports = function (grunt) {
 		var done = this.async();
 
 		var spawn = child_process.spawn,
-			child = spawn(this.data.command, this.data.args || [], {
-				stdio: [process.stdin]
-			});
+			child = spawn(this.data.command, this.data.args || []);
 
 		child.stdout.on('data', function (data) {
 			grunt.log.write(data);
