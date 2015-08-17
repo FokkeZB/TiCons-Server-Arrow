@@ -1,7 +1,7 @@
 {
   "name": "ticons-server",
   "description": "Appcelerator Arrow Cloud server wrapping the TiCons NPM Package.",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "author": "Fokke Zandbergen",
   "license": "MIT",
   "framework": "none",
@@ -21,7 +21,7 @@
     "lodash": "^2.4.1",
     "node-uuid": "^1.4.3",
     "pkginfo": "^0.3.0",
-    "ticons": "fokkezb/ticons-cli#series"
+    "ticons": "^0.13.2"
   },
   "devDependencies": {
     "arrow": "*",
