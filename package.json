@@ -21,7 +21,7 @@
     "lodash": "^2.4.1",
     "node-uuid": "^1.4.3",
     "pkginfo": "^0.3.0",
-    "ticons": "^0.13.2"
+    "ticons": "*"
   },
   "devDependencies": {
     "arrow": "*",
