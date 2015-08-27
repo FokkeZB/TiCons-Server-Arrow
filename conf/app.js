@@ -5,7 +5,7 @@ module.exports = {
 		tmpPath: path.join(__dirname, '..', 'tmp'),
 		zipUrl: '/download',
 		zipPath: path.join(__dirname, '..', 'web', 'public', 'download'),
-		purgeInterval: 1000 * 60 * 15,
+		purgeInterval: 1000 * 60 * 5,
 		platforms: {
 			'iphone': 'iPhone',
 			'ipad': 'iPad',
