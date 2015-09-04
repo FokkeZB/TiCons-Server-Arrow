@@ -178,7 +178,13 @@
 									</label>
 								{{/each}}
 								</div>
-								<p class="help-block">Apple Watches images generate to <code>/apple-watch</code>. You need to import them in the XCode project yourself until Titanium supports JavaScript Extensions.</p>
+								<p class="help-block">Apple Watches images generate to <code>/apple-watch</code>. You need to use them in the Xcode project yourself.</p>
+							</div>
+
+							<div class="form-group">
+								<label for="radius">Titanium SDK version</label>
+								<input type="text" name="sdk-version" class="form-control" id="sdk-version" style="width:25%" value="{{params.sdk-version}}">
+								<p class="help-block">For Titanium 5.0 and later it will generate only one 1024x1024 iOS icon.</p>
 							</div>
 
 							<div class="form-group">

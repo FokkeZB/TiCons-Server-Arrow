@@ -29,6 +29,7 @@ module.exports = {
 			'max-dpi': 480,
 			'alloy': true,
 			'label': false,
+			'sdk-version': '5.0.0',
 			'platforms': ['iphone', 'ipad', 'android'],
 			'orientations': ['portrait', 'landscape'],
 			'radius': 0,
