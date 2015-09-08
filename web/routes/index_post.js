@@ -170,7 +170,7 @@ function select(req, resp, output) {
 		'platforms': req.params.platforms
 	};
 
-	var keys = ['min-dpi', 'max-dpi', 'label'];
+	var keys = ['sdk-version', 'min-dpi', 'max-dpi', 'label'];
 
 	if (output === 'icons') {
 		keys.push('radius');
