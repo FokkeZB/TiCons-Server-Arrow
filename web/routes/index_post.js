@@ -6,6 +6,7 @@ var Arrow = require('arrow'),
 	_ = require('lodash'),
 	fs = require('fs-extra'),
 	ticons = require('ticons'),
+	pkg = require('../../package.json'),
 	utils = require('../../lib/utils'),
 	tiConstants = require('../../node_modules/ticons/lib/constants');
 
@@ -142,6 +143,7 @@ function respond(req, resp, opts) {
 		opts = {};
 	}
 
+	opts.version = pkg.version;
 	opts.dpi = tiConstants.dpi;
 	opts.orientations = CFG.orientations;
 	opts.outputs = CFG.outputs;

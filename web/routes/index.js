@@ -1,4 +1,5 @@
 var Arrow = require('arrow'),
+	pkg = require('../../package.json'),
 	tiConstants = require('../../node_modules/ticons/lib/constants');
 
 var Route = Arrow.Router.extend({
@@ -9,6 +10,7 @@ var Route = Arrow.Router.extend({
 		var CFG = req.server.config.app;
 
 		resp.render('index', {
+			version: pkg.version,
 			dpi: tiConstants.dpi,
 			orientations: CFG.orientations,
 			outputs: CFG.outputs,

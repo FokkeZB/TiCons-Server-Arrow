@@ -1,7 +1,7 @@
 {
   "name": "ticons-server",
   "description": "Appcelerator Arrow Cloud server wrapping the TiCons NPM Package.",
-  "version": "1.0.31",
+  "version": "1.0.33",
   "author": "Fokke Zandbergen",
   "license": "MIT",
   "framework": "none",
@@ -15,16 +15,15 @@
   "repository": {},
   "private": true,
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^1.4.0",
+    "lodash": "^3.10.1",
+    "pkginfo": "^0.3.0",
     "fs-extra": "^0.18.2",
     "imagemagick": "*",
-    "lodash": "^2.4.1",
     "node-uuid": "^1.4.3",
-    "pkginfo": "^0.3.0",
     "ticons": "*"
   },
   "devDependencies": {
-    "arrow": "*",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-jshint": "^0.10.0",
@@ -36,5 +35,9 @@
   "scripts": {
     "test": "grunt"
   },
-  "main": "app.js"
+  "main": "app.js",
+  "healthCheck": true,
+  "engines": {
+      "node": "0.12.7"
+  }
 }
