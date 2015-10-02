@@ -98,7 +98,7 @@ module.exports = function (grunt) {
 					return callback();
 				}
 
-				grunt.log.write('Unpublishing: ' + version);
+				grunt.log.writeln('Unpublishing: ' + version);
 				child_process.exec('appc acs unpublish --ver ' + version, callback);
 
 			}, done);
