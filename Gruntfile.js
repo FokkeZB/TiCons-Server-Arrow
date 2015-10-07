@@ -25,49 +25,17 @@ module.exports = function (grunt) {
 			src: ['test/**/*.js']
 		},
 		clean: ['tmp'],
-		spawn: {
-			bump: {
-				command: 'npm',
-				args: ['version', 'patch', '-m', 'bump version']
-			},
-			install: {
-				command: 'npm',
-				args: ['install']
-			},
-			publish: {
-				command: 'appc',
-				args: ['publish']
+		semver: {
+			pkg: {
+				src: 'package.json',
+				dest: 'package.json'
 			}
 		},
-	});
-
-	// Not using a Grunt-contrib for this because it must work while node_modules is gone
-	grunt.registerMultiTask('spawn', 'Spawns a child process', function () {
-
-		if (!this.data) {
-			return grunt.fail.fatal('Configuration is missing');
-		}
-
-		if (!this.data.command) {
-			return grunt.fail.fatal('Command is missing');
-		}
-
-		var done = this.async();
-
-		var spawn = child_process.spawn,
-			child = spawn(this.data.command, this.data.args || []);
-
-		child.stdout.on('data', function (data) {
-			grunt.log.write(data);
-		});
-
-		child.stderr.on('data', function (data) {
-			grunt.log.error(data);
-		});
-
-		child.on('close', function (code) {
-			done(code === 0);
-		});
+		exec: {
+			publish: {
+				command: 'appc publish'
+			}
+		},
 	});
 
 	grunt.registerTask('unpublish', 'Unpublished old versions', function () {
@@ -111,11 +79,13 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-kahvesi');
+	grunt.loadNpmTasks('grunt-semver');
+	grunt.loadNpmTasks('grunt-exec');
 
 	// register tasks
 	grunt.registerTask('cover', ['kahvesi', 'clean']);
-	grunt.registerTask('publish', ['spawn:bump', 'unpublish', 'spawn:publish']);
+	grunt.registerTask('publish', ['semver:pkg:bump:patch', 'unpublish', 'exec:publish']);
 	grunt.registerTask('test', ['jshint', 'mochaTest', 'clean']);
 
-	grunt.registerTask('default', ['test']);
+	grunt.registerTask('default', ['publish']);
 };

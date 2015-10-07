@@ -1,10 +1,12 @@
 var path = require('path');
+var os = require('os');
 
 module.exports = {
 	app: {
-		tmpPath: path.join(__dirname, '..', 'tmp'),
+		tmpPath: os.tmpdir(),
 		zipUrl: '/download',
 		zipPath: path.join(__dirname, '..', 'web', 'public', 'download'),
+		useTar: false,
 		purgeInterval: 1000 * 60 * 5,
 		platforms: {
 			'iphone': 'iPhone',

@@ -71,7 +71,7 @@ var Route = Arrow.Router.extend({
 		}
 
 		var name = uuid.v1();
-		var fileName = name + '.zip';
+		var fileName = name + (CFG.useTar ? '.tar.gz' : '.zip');
 		var tmpPath = path.join(CFG.tmpPath, name);
 		var zipUrl = path.join(CFG.zipUrl, fileName);
 		var zipPath = path.join(CFG.zipPath, fileName);
@@ -103,7 +103,8 @@ var Route = Arrow.Router.extend({
 			zip: function (next) {
 				zip({
 					input: tmpPath,
-					output: zipPath
+					output: zipPath,
+					useTar: CFG.useTar
 				}, next);
 			}
 
@@ -162,7 +163,7 @@ function respond(req, resp, opts) {
 
 function zip(opts, callback) {
 
-	child_process.exec('zip -r ' + opts.output + ' ./', {
+	child_process.exec((opts.useTar ? 'tar -zcvf' : 'zip -r') + ' ' + opts.output + ' ./', {
 		cwd: opts.input,
 
 	}, function (error, stdout, stderr) {
