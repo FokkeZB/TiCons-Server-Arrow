@@ -155,7 +155,7 @@ function respond(req, resp, opts) {
 	opts.dpi = tiConstants.dpi;
 	opts.orientations = CFG.orientations;
 	opts.outputs = CFG.outputs;
-	opts.params = CFG.defaults;
+	opts.params = req.params || CFG.defaults;
 	opts.platforms = CFG.platforms;
 
 	resp.render('index', opts);
@@ -180,7 +180,7 @@ function select(req, resp, output) {
 		'platforms': req.params.platforms
 	};
 
-	var keys = ['sdk-version', 'min-dpi', 'max-dpi', 'label'];
+	var keys = ['sdk-version', 'alloy-base', 'min-dpi', 'max-dpi', 'label'];
 
 	if (output === 'icons') {
 		keys.push('radius');

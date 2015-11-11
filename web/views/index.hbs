@@ -143,7 +143,7 @@
 								<label>Output</label>
 								<div>
 								{{#each outputs}}
-									<label class="checkbox-inline" for="output-{{@key}}">
+									<label class="checkbox-inline" for="outputs-{{@key}}">
 										<input type="checkbox" name="outputs-{{@key}}" id="outputs-{{@key}}" {{#ifCond @key "in" ../params.outputs}} checked="checked"{{/ifCond}} value="{{@key}}"> {{this}}
 									</label>
 								{{/each}}
@@ -187,6 +187,12 @@
 								<label for="radius">Titanium SDK version</label>
 								<input type="text" name="sdk-version" class="form-control" id="sdk-version" style="width:25%" value="{{params.sdk-version}}">
 								<p class="help-block">Set to the Titanium SDK version you use to get the right icons.</p>
+							</div>
+
+							<div class="form-group">
+								<label for="radius">Alloy Base Directory</label>
+								<input type="text" name="alloy-base" class="form-control" id="alloy-base" style="width:25%" value="{{params.alloy-base}}">
+								<p class="help-block">Change the Alloy base directory if you use something like <a href="https://github.com/dbankier/JAST" target="_blank">JAST</a>.</p>
 							</div>
 
 							<div class="form-group">

@@ -37,7 +37,8 @@ module.exports = {
 			'radius': 0,
 			'no-crop': false,
 			'no-fix': false,
-			'no-nine': false
+			'no-nine': false,
+			'alloy-base': 'app'
 		}
 	}
 };
