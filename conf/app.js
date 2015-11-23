@@ -28,7 +28,7 @@ module.exports = {
 		defaults: {
 			'outputs': ['icons', 'splashes'],
 			'min-dpi': 160,
-			'max-dpi': 480,
+			'max-dpi': 640,
 			'alloy': true,
 			'label': false,
 			'sdk-version': '5.1.0',
