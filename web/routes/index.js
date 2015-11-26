@@ -7,7 +7,7 @@ var Arrow = require('arrow'),
 	fs = require('fs-extra'),
 	ticons = require('ticons'),
 	pkg = require('../../package.json'),
-	cliPkg = require('../../node_modules/ticons/package.json')
+	cliPkg = require('../../node_modules/ticons/package.json'),
 	utils = require('../../lib/utils'),
 	tiConstants = require('../../node_modules/ticons/lib/constants');
 
@@ -155,7 +155,7 @@ function respond(req, resp, opts) {
 	opts.dpi = tiConstants.dpi;
 	opts.orientations = CFG.orientations;
 	opts.outputs = CFG.outputs;
-	opts.params = req.params || CFG.defaults;
+	opts.params = (req.method !== 'POST') ? CFG.defaults : req.params;
 	opts.platforms = CFG.platforms;
 
 	resp.render('index', opts);
