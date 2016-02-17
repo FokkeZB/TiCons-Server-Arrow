@@ -31,13 +31,14 @@ module.exports = {
 			'max-dpi': 640,
 			'alloy': true,
 			'label': false,
-			'sdk-version': '5.1.0',
+			'sdk-version': '5.2.0',
 			'platforms': ['iphone', 'ipad', 'android'],
 			'orientations': ['portrait', 'landscape'],
 			'radius': 0,
 			'no-crop': false,
 			'no-fix': false,
 			'no-nine': false,
+			'storyboard': false,
 			'alloy-base': 'app'
 		}
 	}

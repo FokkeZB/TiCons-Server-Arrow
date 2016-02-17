@@ -99,12 +99,12 @@
 			<p>Thanks to device fragmentation icons &amp; splashes make a big part of your app's size. Use <a href="https://imageoptim.com/" target="_blank">ImageOptim</a> to reduce the size up to 50%. Just drop your entire project on the app and get a coffeee while it melts your laptop.</p>
 
 		</div>
-	  
+
 		<div class="well">
 
 			<h2>TiCons Server <a href="http://www.appcelerator.com/product/arrow/" target="_blank" title="Powered by Arrow Cloud" class="pull-right"><img src="/images/arrow-cloud.png" alt="Powered by Arrow Cloud" /></a></h2>
 
-			<p>This <a href="http://www.appcelerator.com/product/arrow/" target="_blank">Appcelerator Arrow Cloud</a> server simply wraps the <a href="#npm">TiCons NPM Module</a>.</p>			
+			<p>This <a href="http://www.appcelerator.com/product/arrow/" target="_blank">Appcelerator Arrow Cloud</a> server simply wraps the <a href="#npm">TiCons NPM Module</a>.</p>
 
 			<form action="./#result" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="MAX_FILE_SIZE" value="12328960" />
@@ -117,7 +117,7 @@
 						<div class="form-group">
 							<input type="file" name="input" id="input">
 							<p class="help-block">Ideally an 2208x2208 image with main content in center 1104x1104 if you're cropping splashes (default).</p>
-							
+
 						</div>
 
 					</div>
@@ -133,7 +133,7 @@
 						<li role="presentation" class="active"><a href="#global" aria-controls="global" role="tab" data-toggle="tab">Global</a></li>
 						<li role="presentation"><a href="#icons" aria-controls="icons" role="tab" data-toggle="tab">Icons</a></li>
 						<li role="presentation"><a href="#splashes" aria-controls="splashes" role="tab" data-toggle="tab">Splashes</a></li>
-						<button type="submit" class="btn btn-primary pull-right">Generate</button>	
+						<button type="submit" class="btn btn-primary pull-right">Generate</button>
 					</ul>
 
 					<div class="tab-content">
@@ -268,6 +268,11 @@
 							<div class="form-group">
 								<label>Options</label>
 								<div class="checkbox">
+									<label for="storyboard">
+										<input type="checkbox" name="storyboard" {{#ifCond params.storyboard "===" true}} checked="checked"{{/ifCond}} id="storyboard" value="true"> <strong>Storyboard:</strong> Generate LaunchLogo files for Titanium to use on Storyboard Launch Screens for iOS.
+									</label>
+								</div>
+								<div class="checkbox">
 									<label for="no-nine">
 										<input type="checkbox" name="no-nine" {{#ifCond params.no-nine "===" false}} checked="checked"{{/ifCond}} id="no-nine" value="true"> <strong>Nine:</strong> Use <a href="http://docs.appcelerator.com/platform/latest/#!/guide/Icons_and_Splash_Screens-section-29004897_IconsandSplashScreens-Androidsplashscreenconsiderations" target="_blank">nine-patch</a> for Android.
 									</label>
@@ -317,7 +322,7 @@
 			<p><span class="label label-info">TIP</span> Submit the TiCons Server form (with optional input) for CLI and Module copy-paste examples.</p>
 
 			{{#if examples}}
-			
+
 				<h3>CLI</h3>
 
 				<pre>{{#if examples.icons}}{{examples.icons.cli}}{{#if examples.splashes}}

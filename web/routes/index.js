@@ -27,6 +27,7 @@ var Route = Arrow.Router.extend({
 		// convert to bool
 		req.params.alloy = !!req.params.alloy;
 		req.params.label = !!req.params.label;
+		req.params['storyboard'] = !!req.params['storyboard'];
 		req.params['no-nine'] = !req.params['no-nine'];
 		req.params['no-crop'] = !req.params['no-crop'];
 		req.params['no-fix'] = !req.params['no-fix'];
@@ -185,7 +186,7 @@ function select(req, resp, output) {
 	if (output === 'icons') {
 		keys.push('radius');
 	} else {
-		keys.push('locale', 'orientation', 'width', 'height', 'no-nine', 'no-crop', 'no-fix');
+		keys.push('locale', 'orientation', 'width', 'height', 'storyboard', 'no-nine', 'no-crop', 'no-fix');
 	}
 
 	keys.forEach(function (key) {
