@@ -1,8 +1,9 @@
 {
-	"browser": false,
+	"browser": true,
 	"camelcase": false,
 	"curly": true,
 	"eqeqeq": true,
+	"jquery": true,
 	"expr": true,
 	"immed": true,
 	"indent": 4,

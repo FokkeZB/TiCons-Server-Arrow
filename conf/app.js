@@ -23,7 +23,8 @@ module.exports = {
 		},
 		outputs: {
 			'icons': 'Icons',
-			'splashes': 'Splashes'
+			'splashes': 'Splashes',
+			'assets': 'Assets'
 		},
 		defaults: {
 			'outputs': ['icons', 'splashes'],
