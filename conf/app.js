@@ -3,11 +3,13 @@ var os = require('os');
 
 module.exports = {
 	app: {
+		s3: {
+			region: 'us-east-1',
+			bucket: 'ticons'
+		},
 		tmpPath: os.tmpdir(),
-		zipUrl: '/download',
 		zipPath: path.join(__dirname, '..', 'web', 'public', 'download'),
 		useTar: false,
-		purgeInterval: 1000 * 60 * 5,
 		platforms: {
 			'iphone': 'iPhone',
 			'ipad': 'iPad',

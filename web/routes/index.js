@@ -9,7 +9,8 @@ var Arrow = require('arrow'),
   pkg = require('../../package.json'),
   cliPkg = require('../../node_modules/ticons/package.json'),
   utils = require('../../lib/utils'),
-  tiConstants = require('../../node_modules/ticons/lib/constants');
+  tiConstants = require('../../node_modules/ticons/lib/constants'),
+  AWS = require('aws-sdk');
 
 var Route = Arrow.Router.extend({
   name: 'index_post',
@@ -96,8 +97,8 @@ var Route = Arrow.Router.extend({
     var name = uuid.v1();
     var fileName = name + (CFG.useTar ? '.tar.gz' : '.zip');
     var tmpPath = path.join(CFG.tmpPath, name);
-    var zipUrl = path.join(CFG.zipUrl, fileName);
-    var zipPath = path.join(CFG.zipPath, fileName);
+    var zipPath = path.join(CFG.tmpPath, fileName);
+    var zipUrl;
 
     async.series({
 
@@ -140,6 +141,31 @@ var Route = Arrow.Router.extend({
           output: zipPath,
           useTar: CFG.useTar
         }, next);
+      },
+
+      upload: function(next) {
+
+        var s3bucket = new AWS.S3({
+          region: server.config.app.s3.region,
+          params: {
+            Bucket: server.config.app.s3.bucket
+          }
+        });
+
+        s3bucket.upload({
+          Body: fs.createReadStream(zipPath),
+          StorageClass: 'REDUCED_REDUNDANCY',
+          Key: fileName
+        }, function(err, data) {
+
+          if (err) {
+            return next(err);
+          }
+
+          zipUrl = data.Location;
+
+          return next();
+        });
       }
 
     }, function(ticonsErr, results) {
@@ -150,20 +176,12 @@ var Route = Arrow.Router.extend({
         errors.push(ticonsErr.toString());
       }
 
-      return fs.remove(tmpPath, function(removeErr) {
+      if (ticonsErr) {
+        return respond(req, resp, errors);
+      }
 
-        if (removeErr) {
-          server.logger.error(removeErr);
-          errors.push(removeErr.toString());
-        }
-
-        if (ticonsErr) {
-          return respond(req, resp, errors);
-        }
-
-        return respond(req, resp, {
-          zipUrl: zipUrl
-        });
+      return respond(req, resp, {
+        zipUrl: zipUrl
       });
     });
   }

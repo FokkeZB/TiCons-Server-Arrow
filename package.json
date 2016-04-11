@@ -1,42 +1,43 @@
 {
-	"name": "ticons-server",
-	"description": "Appcelerator Arrow Cloud server wrapping the TiCons NPM Package.",
-	"version": "1.0.66",
-	"author": "Fokke Zandbergen",
-	"license": "MIT",
-	"framework": "none",
-	"keywords": [
-		"appcelerator",
-		"arrow",
-		"ticons",
-		"icons",
-		"splashes"
-	],
-	"repository": {},
-	"private": true,
-	"dependencies": {
-		"async": "^1.4.0",
-		"lodash": "^3.10.1",
-		"pkginfo": "^0.3.0",
-		"fs-extra": "^0.18.2",
-		"imagemagick": "*",
-		"node-uuid": "^1.4.3",
-		"ticons": "*"
-	},
-	"devDependencies": {
-		"grunt": "^0.4.5",
-		"grunt-contrib-clean": "^0.6.0",
-		"grunt-contrib-jshint": "^0.10.0",
-		"grunt-exec": "^0.4.6",
-		"grunt-kahvesi": "^0.1.0",
-		"grunt-mocha-test": "^0.11.0",
-		"grunt-semver": "^0.1.6",
-		"mocha": "^1.21.4",
-		"should": "^4.0.4"
-	},
-	"main": "app.js",
-	"healthCheck": true,
-	"engines": {
-		"node": "0.12.7"
-	}
+  "name": "ticons-server",
+  "description": "Appcelerator Arrow Cloud server wrapping the TiCons NPM Package.",
+  "version": "1.0.73",
+  "author": "Fokke Zandbergen",
+  "license": "MIT",
+  "framework": "none",
+  "keywords": [
+    "appcelerator",
+    "arrow",
+    "ticons",
+    "icons",
+    "splashes"
+  ],
+  "repository": {},
+  "private": true,
+  "dependencies": {
+    "async": "^1.4.0",
+    "aws-sdk": "^2.3.3",
+    "fs-extra": "^0.18.2",
+    "imagemagick": "*",
+    "lodash": "^3.10.1",
+    "node-uuid": "^1.4.3",
+    "pkginfo": "^0.3.0",
+    "ticons": "*"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-exec": "^0.4.6",
+    "grunt-kahvesi": "^0.1.0",
+    "grunt-mocha-test": "^0.11.0",
+    "grunt-semver": "^0.1.6",
+    "mocha": "^1.21.4",
+    "should": "^4.0.4"
+  },
+  "main": "app.js",
+  "healthCheck": true,
+  "engines": {
+    "node": "0.12.7"
+  }
 }

@@ -32,12 +32,6 @@ handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 // lifecycle examples
 server.on('starting', function () {
 	server.logger.debug('server is starting!');
-
-	// purge zip files every 15m
-	setInterval(function () {
-		utils.purge(server);
-	}, server.config.app.purgeInterval);
-
 });
 
 server.on('started', function () {
