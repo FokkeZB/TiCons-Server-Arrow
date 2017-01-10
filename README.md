@@ -1,3 +1,5 @@
+> **DEPRECATED:** Please see/use the [Node.js Express version](https://github.com/FokkeZB/TiCons-Server).
+
 # TiCons Server
 
 This Appcelerator Arrow Cloud (NodeJS) server running at [http://ticons.fokkezb.nl](http://ticons.fokkezb.nl) wraps the [TiCons CLI](https://www.npmjs.com/package/ticons).
